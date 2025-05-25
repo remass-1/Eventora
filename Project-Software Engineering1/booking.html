@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Booking | Eventora</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #f2f2f2, #e6f0ff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .booking-box {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #3c2a91;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background-color: #3c2a91;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #2a1d6d;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="booking-box">
+    <h2>Confirm Your Booking</h2>
+    <form id="bookingForm">
+      <input type="number" id="people" placeholder="Number of People" required>
+      <input type="date" id="date" required>
+      <select id="payment" required>
+        <option value="">Select Payment Method</option>
+        <option value="Apple Pay">Apple Pay</option>
+        <option value="Mada">Mada</option>
+        <option value="Credit Card">Credit Card</option>
+      </select>
+      <button type="submit">Confirm Booking</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("bookingForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const booking = {
+        people: document.getElementById("people").value,
+        date: document.getElementById("date").value,
+        payment: document.getElementById("payment").value
+      };
+
+      const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+      bookings.push(booking);
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+
+      window.location.href = "my-booking.html";
+    });
+  </script>
+
+</body>
+</html>

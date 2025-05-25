@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eventora | Categories</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #e3f2fd, #fce4ec);
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    h1 {
+      color: #a84a77;
+      margin-bottom: 40px;
+    }
+
+    .category-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .category-box {
+      width: 240px;
+      padding: 15px;
+      font-size: 18px;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .category-box:hover {
+      transform: translateY(-3px);
+      cursor: pointer;
+    }
+
+    .activities { background-color: #f57c00; }
+    .restaurants { background-color: #388e3c; }
+    .concerts { background-color: #c2185b; }
+  </style>
+</head>
+<body>
+
+  <h1>Select a Category</h1>
+
+  <div class="category-container">
+    <a href="activities-events.html" class="category-box activities">Activities</a>
+    <a href="restaurants-events.html" class="category-box restaurants">Restaurants</a>
+    <a href="concerts-events.html" class="category-box concerts">Concerts</a>
+  </div>
+
+</body>
+</html>

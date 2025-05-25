@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eventora | Restaurants</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #e3f2fd, #fce4ec);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #a84a77;
+      margin-bottom: 30px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .card {
+      width: 90%;
+      max-width: 500px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      color: #5c7ea6;
+    }
+
+    .card p {
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .card a {
+      display: block;
+      text-align: center;
+      background-color: #a84a77;
+      color: white;
+      padding: 12px;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .card a:hover {
+      background-color: #87365e;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Discover Riyadh Restaurants</h1>
+
+  <div class="card-container">
+
+    <div class="card">
+      <img src="restaurants_events_assets/restaurant1.jpg" alt="Lusin Restaurant">
+      <div class="card-content">
+        <h3>Lusin Restaurant</h3>
+        <p>Located at Centria Mall on Olaya Street, Riyadh.</p>
+       <a href="booking.html?name=Lusin Restaurant"><button>Book Now</button></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="restaurants_events_assets/restaurant2.jpg" alt="Karam Beirut Restaurant">
+      <div class="card-content">
+        <h3>Karam Beirut Restaurant</h3>
+        <p>Located on Tahlia Street, Riyadh.</p>
+       <a href="booking.html?name=Lusin Restaurant"><button>Book Now</button></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="restaurants_events_assets/restaurant3.jpg" alt="The Globe Restaurant">
+      <div class="card-content">
+        <h3>The Globe Restaurant</h3>
+        <p>Located in Al Faisaliah Tower, Riyadh.</p>
+       <a href="booking.html?name=Lusin Restaurant"><button>Book Now</button></a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
