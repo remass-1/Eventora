@@ -2,95 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - Eventora</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #f9d5ec, #d0aaff);
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 120px auto;
-      padding: 40px;
-      background-color: #ffffff;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-      text-align: center;
-      color: #6a0dad;
-      margin-bottom: 20px;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #6a0dad;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #520a88;
-    }
-
-    p {
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    a {
-      color: #6a0dad;
-      text-decoration: none;
-    }
+    body { font-family: Arial, sans-serif; background: #f7f9fc; margin:0; padding:0;}
+    header, footer { background: #004080; color: white; padding: 15px 20px; }
+    nav a { color: white; text-decoration: none; margin-right: 15px; }
+    nav a.active { font-weight: bold; text-decoration: underline; }
+    main { max-width: 400px; margin: 50px auto; background: white; padding: 30px; box-shadow: 0 0 8px rgba(0,0,0,0.1);}
+    input[type=text], input[type=password] { width: 100%; padding: 8px; margin: 10px 0 20px; box-sizing: border-box;}
+    button { background: #004080; color: white; padding: 10px; border: none; cursor: pointer; width: 100%; font-size: 16px;}
+    button:hover { background: #0066cc; }
+    .error { color: red; font-size: 14px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Create an Account</h2>
-    <input type="email" id="email" placeholder="Email address" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button onclick="register()">Register</button>
-    <p>Already have an account? <a href="login.html">Login</a></p>
-  </div>
 
-  <script>
-    function register() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+<header>
+  <h1>Eventora</h1>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="register.html" class="active">Register</a>
+  </nav>
+</header>
 
-      if (email === "" || password === "") {
-        alert("Please fill in all fields.");
-        return;
-      }
+<main>
+  <h2>Create an Account</h2>
+  <form id="registerForm" onsubmit="return registerUser(event)">
+    <label for="username">Username</label><br />
+    <input type="text" id="username" required /><br />
 
-      const user = {
-        email: email,
-        password: password,
-      };
+    <label for="password">Password (min 6 characters)</label><br />
+    <input type="password" id="password" minlength="6" required /><br />
 
-      localStorage.setItem("user", JSON.stringify(user));
-      alert("Account created successfully!");
+    <label for="confirmPassword">Confirm Password</label><br />
+    <input type="password" id="confirmPassword" minlength="6" required /><br />
 
-      window.location.href = "login.html";
-    }
-  </script>
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a href="login.html">Login here</a>.</p>
+  <p id="errorMsg" class="error"></p>
+</main>
+
+<footer>
+  <p>&copy; 2025 Eventora. All rights reserved.</p>
+</footer>
+
+<script>
+function registerUser(event) {
+  event.preventDefault();
+
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  if (password !== confirmPassword) {
+    showError('Passwords do not match.');
+    return false;
+  }
+
+  if (password.length < 6) {
+    showError('Password must be at least 6 characters.');
+    return false;
+  }
+
+ 
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+  if (users.some(u => u.username === username)) {
+    showError('Username already taken. Choose another.');
+    return false;
+  }
+
+  users.push({ username, password });
+  localStorage.setItem('users', JSON.stringify(users));
+
+  alert('Registration successful! You can now login.');
+
+ 
+  window.location.href = 'login.html';
+  return false;
+}
+
+function showError(msg) {
+  document.getElementById('errorMsg').textContent = msg;
+}
+</script>
+
 </body>
 </html>
