@@ -1,108 +1,246 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Activities in Riyadh</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eventora - Activities & Events</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
-      background-color: #ffffff;
-      font-family: 'Segoe UI', sans-serif;
-      padding: 40px 20px;
-      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f7f8fa;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
-
-    h1 {
-      color: #a84a77;
-      margin-bottom: 40px;
-    }
-
-    .card {
-      background-color: #f9f9f9;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      margin: 0 auto 30px;
-      max-width: 400px;
-      overflow: hidden;
-      text-align: left;
-    }
-
-    .card img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .card-content {
-      padding: 20px;
-    }
-
-    .card h3 {
-      color: #37474f;
-      margin: 0 0 10px;
-    }
-
-    .card p {
-      margin: 0 0 20px;
-      color: #555;
-    }
-
-    .card a {
-      display: block;
-      text-align: center;
-      background-color: #a84a77;
-      color: white;
-      padding: 10px;
+    a {
       text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
+      color: #2a7ae2;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #1a5ac7;
+    }
+
+    header {
+      background-color: #2a7ae2;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+    nav a {
+      margin-left: 1.5rem;
+      font-weight: 500;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 2rem auto 3rem;
+      padding: 0 1rem;
+      flex-grow: 1;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      font-size: 2rem;
+      color: #2a7ae2;
+    }
+
+    /* Event cards grid */
+    .events-grid {
+      display: grid;
+      gap: 1.8rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    .event-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+    .event-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .event-content {
+      padding: 1rem 1.2rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .event-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #222;
+    }
+    .event-date-location {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 1rem;
+    }
+    .event-description {
+      flex-grow: 1;
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 1.2rem;
+    }
+    .btn-book {
+      background-color: #2a7ae2;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      align-self: flex-start;
       transition: background-color 0.3s ease;
     }
-
-    .card a:hover {
-      background-color: #8d3a65;
+    .btn-book:hover {
+      background-color: #1a5ac7;
     }
-  </style> 
-  <link rel="stylesheet" href="style.css">
+
+    footer {
+      background-color: #2a7ae2;
+      color: white;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.25rem;
+      }
+      nav a {
+        margin-left: 1rem;
+        font-size: 0.9rem;
+      }
+      .event-image {
+        height: 140px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Eventora</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="activities-events.html" aria-current="page">Activities & Events</a>
+      <a href="booking.html">Booking</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
 
-  <h1>Discover Activities in Riyadh</h1>
+  <main>
+    <h2>Explore Exciting Activities & Events</h2>
 
-  <div class="card">
-    <img src="attractions_events_assets/attraction1.jpg" alt="Riyadh Zoo">
-    <div class="card-content">
-      <h3>Riyadh Zoo</h3>
-      <p>Located in Al Malaz. Entry ticket is required.</p>
-      <a href="booking.html">Book Now</a>
-    </div>
-  </div>
+    <section class="events-grid" id="eventsGrid">
+      <!-- Event cards will be inserted here dynamically -->
+    </section>
+  </main>
 
-  <div class="card">
-    <img src="attractions_events_assets/attraction2.jpg" alt="National Museum">
-    <div class="card-content">
-      <h3>National Museum</h3>
-      <p>Located in King Abdulaziz Historical Center. Entry ticket is required.</p>
-     <a href="booking.html?place=Lusin Restaurant"><button>Book Now</button></a>
-    </div>
-  </div>
+  <footer>
+    &copy; 2025 Eventora. All rights reserved.
+  </footer>
 
-  <div class="card">
-    <img src="attractions_events_assets/attraction3.jpg" alt="Riyadh Park">
-    <div class="card-content">
-      <h3>Riyadh Park</h3>
-      <p>Located in Al Aqiq District. Booking is required for certain zones.</p>
-     <a href="booking.html?place=Lusin Restaurant"><button>Book Now</button></a>
-    </div>
-  </div>
+  <script>
+    // Sample events data
+    const events = [
+      {
+        id: 1,
+        title: "Desert Safari Adventure",
+        date: "2025-06-15",
+        location: "Riyadh Desert",
+        description: "Experience the thrill of dune bashing, camel riding, and traditional Bedouin camp dinners under the stars.",
+        imageUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 2,
+        title: "Cultural Heritage Festival",
+        date: "2025-07-20",
+        location: "National Museum, Riyadh",
+        description: "Celebrate Saudi culture with live performances, handicraft exhibitions, and traditional cuisine.",
+        imageUrl: "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 3,
+        title: "Coastal Music Nights",
+        date: "2025-08-05",
+        location: "Jeddah Corniche",
+        description: "Enjoy live music performances by local and international artists by the beautiful Red Sea coast.",
+        imageUrl: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80"
+      }
+    ];
 
-  <div class="card">
-    <img src="attractions_events_assets/attraction4.jpg" alt="Science Oasis">
-    <div class="card-content">
-      <h3>Science Oasis</h3>
-      <p>Located in Al Nakheel. Offers interactive activities for children. Entry ticket required.</p>
-     <a href="booking.html?place=Lusin Restaurant"><button>Book Now</button></a>
-    </div>
-  </div>
+    // Function to format date nicely
+    function formatDate(dateStr) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateStr).toLocaleDateString(undefined, options);
+    }
 
+    // Render events dynamically
+    const eventsGrid = document.getElementById('eventsGrid');
+
+    events.forEach(event => {
+      const card = document.createElement('article');
+      card.className = 'event-card';
+
+      card.innerHTML = 
+        <img src="${event.imageUrl}" alt="${event.title} Image" class="event-image" />
+        <div class="event-content">
+          <h3 class="event-title">${event.title}</h3>
+          <p class="event-date-location">${formatDate(event.date)} | ${event.location}</p>
+          <p class="event-description">${event.description}</p>
+          <button class="btn-book" onclick="bookEvent(${event.id})">Book Now</button>
+        </div>
+      ;
+
+      eventsGrid.appendChild(card);
+    });
+
+    // Booking function (example)
+    function bookEvent(eventId) {
+      const event = events.find(e => e.id === eventId);
+      if (event) {
+        alert(You selected to book: ${event.title}. Redirecting to booking page...);
+        // Redirect to booking page with event info, e.g.
+        // window.location.href = booking.html?eventId=${eventId};
+      }
+    }
+  </script>
 </body>
 </html>
