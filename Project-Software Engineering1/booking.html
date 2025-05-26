@@ -2,83 +2,133 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Booking | Eventora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Booking - Eventora</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #f2f2f2, #e6f0ff);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    body { font-family: Arial, sans-serif; margin:0; background: #f0f4f8;}
+    header, footer { background: #004080; color: white; padding: 15px 20px; }
+    nav a { color: white; text-decoration: none; margin-right: 15px; }
+    nav a.active { font-weight: bold; text-decoration: underline; }
+    main { max-width: 500px; margin: auto; padding: 30px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+    h2 { color: #004080; margin-bottom: 20px; }
+    label { display: block; margin: 15px 0 5px; }
+    select, input[type=date], input[type=number] {
+      width: 100%; padding: 8px; box-sizing: border-box;
     }
-    .booking-box {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 320px;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #3c2a91;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    button {
-      background-color: #3c2a91;
-      color: white;
-      cursor: pointer;
-      border: none;
-    }
-    button:hover {
-      background-color: #2a1d6d;
-    }
+    button { background: #004080; color: white; padding: 10px; border: none; cursor: pointer; margin-top: 20px; width: 100%; font-size: 16px; }
+    button:hover { background: #0066cc; }
   </style>
 </head>
 <body>
 
-  <div class="booking-box">
-    <h2>Confirm Your Booking</h2>
-    <form id="bookingForm">
-      <input type="number" id="people" placeholder="Number of People" required>
-      <input type="date" id="date" required>
-      <select id="payment" required>
-        <option value="">Select Payment Method</option>
-        <option value="Apple Pay">Apple Pay</option>
-        <option value="Mada">Mada</option>
-        <option value="Credit Card">Credit Card</option>
-      </select>
-      <button type="submit">Confirm Booking</button>
-    </form>
-  </div>
+<header>
+  <h1>Eventora</h1>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="restaurants.html">Restaurants</a>
+    <a href="booking.html" class="active">Booking</a>
+    <a href="mybookings.html">My Bookings</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
 
-  <script>
-    document.getElementById("bookingForm").addEventListener("submit", function(event) {
-      event.preventDefault();
+<main>
+  <h2>Make a Booking</h2>
+  <form id="bookingForm" onsubmit="return makeBooking(event)">
+    <label for="restaurant">Select Restaurant</label>
+    <select id="restaurant" required>
+      <option value="">--Choose a restaurant--</option>
+    </select>
 
-      const booking = {
-        people: document.getElementById("people").value,
-        date: document.getElementById("date").value,
-        payment: document.getElementById("payment").value
-      };
+    <label for="date">Booking Date</label>
+    <input type="date" id="date" required min="" />
 
-      const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
-      bookings.push(booking);
-      localStorage.setItem("bookings", JSON.stringify(bookings));
+    <label for="guests">Number of Guests</label>
+    <input type="number" id="guests" required min="1" max="20" value="1" />
 
-      window.location.href = "my-booking.html";
-    });
-  </script>
+    <button type="submit">Book Now</button>
+  </form>
+</main>
+
+<footer>
+  <p>&copy; 2025 Eventora. All rights reserved.</p>
+</footer>
+
+<script>
+function checkLogin() {
+  const user = localStorage.getItem('loggedInUser');
+  if (!user) {
+    alert('Please log in to access this page.');
+    window.location.href = 'login.html';
+  }
+}
+
+function logout() {
+  localStorage.removeItem('loggedInUser');
+  alert('You have been logged out.');
+  window.location.href = 'login.html';
+}
+
+const restaurants = [
+  "La Fiesta",
+  "Sakura Sushi",
+  "Pasta Palace",
+  "Green Garden",
+  "Burger Hub"
+];
+
+function populateRestaurants() {
+  const select = document.getElementById('restaurant');
+  restaurants.forEach(r => {
+    const option = document.createElement('option');
+    option.value = r;
+    option.textContent = r;
+    select.appendChild(option);
+  });
+}
+
+function setMinDate() {
+  const dateInput = document.getElementById('date');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.min = today;
+}
+
+function makeBooking(event) {
+  event.preventDefault();
+  const user = localStorage.getItem('loggedInUser');
+
+  const restaurant = document.getElementById('restaurant').value;
+  const date = document.getElementById('date').value;
+  const guests = parseInt(document.getElementById('guests').value);
+
+  if (!restaurant || !date || !guests || guests < 1) {
+    alert('Please fill out all fields correctly.');
+    return false;
+  }
+
+  const booking = { username: user, restaurant, date, guests };
+
+  
+  let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+
+  
+  bookings.push(booking);
+
+  
+  localStorage.setItem('bookings', JSON.stringify(bookings));
+
+  alert('Booking successful!');
+
+ 
+  document.getElementById('bookingForm').reset();
+
+  return false;
+}
+
+checkLogin();
+populateRestaurants();
+setMinDate();
+</script>
 
 </body>
 </html>
