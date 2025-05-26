@@ -1,56 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Eventora | Home</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home - Eventora</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #e0f7fa, #ffe0f0);
-      text-align: center;
-      padding-top: 100px;
-    }
-
-    h1 {
-      font-size: 48px;
-      color: #5c7ea6;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 20px;
-      color: #444;
-      margin-bottom: 40px;
-    }
-
-    .button {
-      display: block;
-      width: 250px;
-      margin: 15px auto;
-      padding: 15px 0;
-      background-color: #7ec8e3;
-      color: white;
-      font-size: 18px;
-      border: none;
-      border-radius: 12px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-      background-color: #569dbf;
-    }
+    body { font-family: Arial, sans-serif; margin:0; background: #f0f4f8;}
+    header, footer { background: #004080; color: white; padding: 15px 20px; }
+    nav a { color: white; text-decoration: none; margin-right: 15px; }
+    nav a.active { font-weight: bold; text-decoration: underline; }
+    main { padding: 30px; max-width: 900px; margin: auto; }
+    h2 { color: #004080; }
+    .welcome { margin-bottom: 20px; }
+    button.logout-btn { background: #cc3300; color: white; border: none; padding: 8px 12px; cursor: pointer; float: right; margin-top: -40px; }
+    button.logout-btn:hover { background: #ff471a; }
   </style>
 </head>
 <body>
-  <h1>Welcome to Eventora</h1>
-  <p>Start your experience by choosing a category</p>
 
-  <a href="categories.html" class="button">Explore Categories</a>
-  <a href="contact.html" class="button">Contact Us</a>
-  <a href="my-booking.html" class="button">My Bookings</a>
-  <a href="login.html" class="button">Log Out</a>
+<header>
+  <h1>Eventora</h1>
+  <nav>
+    <a href="home.html" class="active">Home</a>
+    <a href="restaurants.html">Restaurants</a>
+    <a href="booking.html">Booking</a>
+    <a href="mybookings.html">My Bookings</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<main>
+  <div class="welcome">
+    <h2>Welcome, <span id="usernameDisplay"></span>!</h2>
+    <p>Discover and book the best events and restaurants around you.</p>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Eventora. All rights reserved.</p>
+</footer>
+
+<script>
+function checkLogin() {
+  const user = localStorage.getItem('loggedInUser');
+  if (!user) {
+    alert('Please log in to access this page.');
+    window.location.href = 'login.html';
+  } else {
+    document.getElementById('usernameDisplay').textContent = user;
+  }
+}
+
+function logout() {
+  localStorage.removeItem('loggedInUser');
+  alert('You have been logged out.');
+  window.location.href = 'login.html';
+}
+
+checkLogin();
+</script>
+
 </body>
 </html>
