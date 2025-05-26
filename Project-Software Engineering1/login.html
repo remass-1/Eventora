@@ -1,100 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login | Eventora</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Eventora</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #f4e4f3, #e1d6f0);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background-color: white;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      width: 350px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 12px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
-    }
-
-    button {
-      width: 100%;
-      background-color: #62007c;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button:hover {
-      background-color: #8e24aa;
-    }
-
-    .signup {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .signup a {
-      color: #62007c;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .signup a:hover {
-      text-decoration: underline;
-    }
+    body { font-family: Arial, sans-serif; background: #f7f9fc; margin:0; padding:0;}
+    header, footer { background: #004080; color: white; padding: 15px 20px; }
+    nav a { color: white; text-decoration: none; margin-right: 15px; }
+    nav a.active { font-weight: bold; text-decoration: underline; }
+    main { max-width: 400px; margin: 50px auto; background: white; padding: 30px; box-shadow: 0 0 8px rgba(0,0,0,0.1);}
+    input[type=text], input[type=password] { width: 100%; padding: 8px; margin: 10px 0 20px; box-sizing: border-box;}
+    button { background: #004080; color: white; padding: 10px; border: none; cursor: pointer; width: 100%; font-size: 16px;}
+    button:hover { background: #0066cc; }
+    .error { color: red; font-size: 14px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Welcome Back</h2>
-    <input type="email" id="email" placeholder="Email address" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <button onclick="login()">Login</button>
-    <div class="signup">
-      Don't have an account? <a href="register.html">Sign up</a>
-    </div>
-  </div>
 
-  <script>
-    function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+<header>
+  <h1>Eventora</h1>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="login.html" class="active">Login</a>
+    <a href="register.html">Register</a>
+  </nav>
+</header>
 
-      const storedUser = JSON.parse(localStorage.getItem("user"));
+<main>
+  <h2>Login</h2>
+  <form id="loginForm" onsubmit="return loginUser(event)">
+    <label for="username">Username</label><br />
+    <input type="text" id="username" required /><br />
 
-      if (storedUser && storedUser.email === email && storedUser.password === password) {
-        alert("Login successful!");
-        window.location.href = "home.html";
-      } else {
-        alert("Incorrect email or password.");
-      }
-    }
-  </script>
+    <label for="password">Password</label><br />
+    <input type="password" id="password" required /><br />
+
+    <button type="submit">Login</button>
+  </form>
+  <p>Don't have an account? <a href="register.html">Register here</a>.</p>
+  <p id="errorMsg" class="error"></p>
+</main>
+
+<footer>
+  <p>&copy; 2025 Eventora. All rights reserved.</p>
+</footer>
+
+<script>
+function loginUser(event) {
+  event.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+
+ 
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  const user = users.find(u => u.username === username);
+
+  if (!user) {
+    showError('User not found. Please register first.');
+    return false;
+  }
+
+  if (user.password !== password) {
+    showError('Incorrect password. Please try again.');
+    return false;
+  }
+
+
+  localStorage.setItem('loggedInUser', username);
+
+ 
+  window.location.href = 'home.html';
+  return false;
+}
+
+function showError(msg) {
+  document.getElementById('errorMsg').textContent = msg;
+}
+</script>
+
 </body>
 </html>
